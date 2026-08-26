@@ -24,27 +24,27 @@ Kelime listemi CSV üzerinde geliştirmeye devam ederken iOS uygulaması bu sist
 
 <p align="center">
 <img src="docs/images/1.PNG" width="250">
-<img src="docs/images/2.png" width="250">
+<img src="docs/images/2.PNG" width="250">
 </p>
 
 ### Quiz
 
 <p align="center">
-<img src="docs/images/3.png" width="250">
+<img src="docs/images/3.PNG" width="250">
 </p>
 
 ### İlerleme ve Geçmiş
 
 <p align="center">
-<img src="docs/images/4.png" width="250">
-<img src="docs/images/5.png" width="250">
+<img src="docs/images/4.PNG" width="250">
+<img src="docs/images/5.PNG" width="250">
 </p>
 
 ### Lock Screen Widget
 
 <p align="center">
-<img src="docs/images/6.png" width="250">
-<img src="docs/images/7.png" width="250">
+<img src="docs/images/6.PNG" width="250">
+<img src="docs/images/7.PNG" width="250">
 </p>
 
 ---
