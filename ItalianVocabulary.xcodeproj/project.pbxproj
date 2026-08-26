@@ -6,14 +6,93 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D72397A1303D4D3E005B6D8D /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D72397A0303D4D3E005B6D8D /* Supabase */; };
+		D7239844303E782B005B6D8D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7239843303E782B005B6D8D /* WidgetKit.framework */; };
+		D7239846303E782B005B6D8D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7239845303E782B005B6D8D /* SwiftUI.framework */; };
+		D7239853303E782D005B6D8D /* ItalianVocabularyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D7239841303E782B005B6D8D /* ItalianVocabularyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D72398F3303EB9EA005B6D8D /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D72398F2303EB9E5005B6D8D /* README.md */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D7239851303E782D005B6D8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D723977A303D4BD0005B6D8D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7239840303E782B005B6D8D;
+			remoteInfo = ItalianVocabularyWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D7239858303E782D005B6D8D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D7239853303E782D005B6D8D /* ItalianVocabularyWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		D7239782303D4BD0005B6D8D /* ItalianVocabulary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItalianVocabulary.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7239841303E782B005B6D8D /* ItalianVocabularyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ItalianVocabularyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7239843303E782B005B6D8D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		D7239845303E782B005B6D8D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		D723985A303E78DC005B6D8D /* ItalianVocabularyWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ItalianVocabularyWidgetExtension.entitlements; sourceTree = "<group>"; };
+		D72398F2303EB9E5005B6D8D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D7239854303E782D005B6D8D /* Exceptions for "ItalianVocabularyWidget" folder in "ItalianVocabularyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D7239840303E782B005B6D8D /* ItalianVocabularyWidgetExtension */;
+		};
+		D7239862303E7970005B6D8D /* Exceptions for "ItalianVocabulary" folder in "ItalianVocabularyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/Widget/WidgetWord.swift,
+				Core/Widget/WidgetWordStore.swift,
+			);
+			target = D7239840303E782B005B6D8D /* ItalianVocabularyWidgetExtension */;
+		};
+		D723986C303EA93E005B6D8D /* Exceptions for "ItalianVocabulary" folder in "ItalianVocabulary" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D7239781303D4BD0005B6D8D /* ItalianVocabulary */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D7239784303D4BD0005B6D8D /* ItalianVocabulary */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D723986C303EA93E005B6D8D /* Exceptions for "ItalianVocabulary" folder in "ItalianVocabulary" target */,
+				D7239862303E7970005B6D8D /* Exceptions for "ItalianVocabulary" folder in "ItalianVocabularyWidgetExtension" target */,
+			);
 			path = ItalianVocabulary;
+			sourceTree = "<group>";
+		};
+		D7239847303E782B005B6D8D /* ItalianVocabularyWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D7239854303E782D005B6D8D /* Exceptions for "ItalianVocabularyWidget" folder in "ItalianVocabularyWidgetExtension" target */,
+			);
+			path = ItalianVocabularyWidget;
+			sourceTree = "<group>";
+		};
+		D72398FC303EBC93005B6D8D /* docs */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = docs;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +102,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D72397A1303D4D3E005B6D8D /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D723983E303E782B005B6D8D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7239846303E782B005B6D8D /* SwiftUI.framework in Frameworks */,
+				D7239844303E782B005B6D8D /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,8 +121,13 @@
 		D7239779303D4BD0005B6D8D = {
 			isa = PBXGroup;
 			children = (
+				D72398F2303EB9E5005B6D8D /* README.md */,
+				D723985A303E78DC005B6D8D /* ItalianVocabularyWidgetExtension.entitlements */,
 				D7239784303D4BD0005B6D8D /* ItalianVocabulary */,
+				D7239847303E782B005B6D8D /* ItalianVocabularyWidget */,
+				D7239842303E782B005B6D8D /* Frameworks */,
 				D7239783303D4BD0005B6D8D /* Products */,
+				D72398FC303EBC93005B6D8D /* docs */,
 			);
 			sourceTree = "<group>";
 		};
@@ -41,8 +135,18 @@
 			isa = PBXGroup;
 			children = (
 				D7239782303D4BD0005B6D8D /* ItalianVocabulary.app */,
+				D7239841303E782B005B6D8D /* ItalianVocabularyWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D7239842303E782B005B6D8D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7239843303E782B005B6D8D /* WidgetKit.framework */,
+				D7239845303E782B005B6D8D /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,20 +159,46 @@
 				D723977E303D4BD0005B6D8D /* Sources */,
 				D723977F303D4BD0005B6D8D /* Frameworks */,
 				D7239780303D4BD0005B6D8D /* Resources */,
+				D7239858303E782D005B6D8D /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D7239852303E782D005B6D8D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D7239784303D4BD0005B6D8D /* ItalianVocabulary */,
+				D72398FC303EBC93005B6D8D /* docs */,
+			);
+			name = ItalianVocabulary;
+			packageProductDependencies = (
+				D72397A0303D4D3E005B6D8D /* Supabase */,
+			);
+			productName = ItalianVocabulary;
+			productReference = D7239782303D4BD0005B6D8D /* ItalianVocabulary.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D7239840303E782B005B6D8D /* ItalianVocabularyWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7239855303E782D005B6D8D /* Build configuration list for PBXNativeTarget "ItalianVocabularyWidgetExtension" */;
+			buildPhases = (
+				D723983D303E782B005B6D8D /* Sources */,
+				D723983E303E782B005B6D8D /* Frameworks */,
+				D723983F303E782B005B6D8D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D7239784303D4BD0005B6D8D /* ItalianVocabulary */,
+				D7239847303E782B005B6D8D /* ItalianVocabularyWidget */,
 			);
-			name = ItalianVocabulary;
+			name = ItalianVocabularyWidgetExtension;
 			packageProductDependencies = (
 			);
-			productName = ItalianVocabulary;
-			productReference = D7239782303D4BD0005B6D8D /* ItalianVocabulary.app */;
-			productType = "com.apple.product-type.application";
+			productName = ItalianVocabularyWidgetExtension;
+			productReference = D7239841303E782B005B6D8D /* ItalianVocabularyWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -83,6 +213,9 @@
 					D7239781303D4BD0005B6D8D = {
 						CreatedOnToolsVersion = 26.4.1;
 					};
+					D7239840303E782B005B6D8D = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
 				};
 			};
 			buildConfigurationList = D723977D303D4BD0005B6D8D /* Build configuration list for PBXProject "ItalianVocabulary" */;
@@ -94,18 +227,29 @@
 			);
 			mainGroup = D7239779303D4BD0005B6D8D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D723979F303D4D3E005B6D8D /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D7239783303D4BD0005B6D8D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				D7239781303D4BD0005B6D8D /* ItalianVocabulary */,
+				D7239840303E782B005B6D8D /* ItalianVocabularyWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D7239780303D4BD0005B6D8D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D723983F303E782B005B6D8D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -119,10 +263,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D72398F3303EB9EA005B6D8D /* README.md in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D723983D303E782B005B6D8D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D7239852303E782D005B6D8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7239840303E782B005B6D8D /* ItalianVocabularyWidgetExtension */;
+			targetProxy = D7239851303E782D005B6D8D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D723978B303D4BD2005B6D8D /* Debug */ = {
@@ -251,16 +411,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ItalianVocabulary/ItalianVocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49CUMHZT5K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ItalianVocabulary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -283,16 +446,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ItalianVocabulary/ItalianVocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49CUMHZT5K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ItalianVocabulary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +469,70 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D7239856303E782D005B6D8D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ItalianVocabularyWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 49CUMHZT5K;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ItalianVocabularyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ItalianVocabularyWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melihsiskular.ItalianVocabulary.ItalianVocabularyWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7239857303E782D005B6D8D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ItalianVocabularyWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 49CUMHZT5K;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ItalianVocabularyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ItalianVocabularyWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melihsiskular.ItalianVocabulary.ItalianVocabularyWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -331,7 +561,35 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D7239855303E782D005B6D8D /* Build configuration list for PBXNativeTarget "ItalianVocabularyWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7239856303E782D005B6D8D /* Debug */,
+				D7239857303E782D005B6D8D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D723979F303D4D3E005B6D8D /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D72397A0303D4D3E005B6D8D /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D723979F303D4D3E005B6D8D /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D723977A303D4BD0005B6D8D /* Project object */;
 }
