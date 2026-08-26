@@ -23,13 +23,13 @@ Kelime listemi CSV üzerinde geliştirmeye devam ederken iOS uygulaması bu sist
 ### Ana Sayfa ve Kelime Çalışma
 
 <p align="center">
-<img src="docs/images/1.png" width="250">
+<img src="docs/images/1.PNG" width="250">
 <img src="docs/images/2.png" width="250">
 </p>
 
 ### Quiz
 
-<p align="leading">
+<p align="center">
 <img src="docs/images/3.png" width="250">
 </p>
 
