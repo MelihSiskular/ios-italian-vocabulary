@@ -60,7 +60,6 @@ gibi yeni çalışma türleri mevcut sistemi bozmadan eklenebilir.
 <img src="docs/images/2.PNG" width="200">
 <img src="docs/images/14.PNG" width="200">
 </p>
----
 
 ## Vocabulary Quiz
 
@@ -70,7 +69,6 @@ gibi yeni çalışma türleri mevcut sistemi bozmadan eklenebilir.
 <img src="docs/images/6.PNG" width="200">
 <img src="docs/images/7.PNG" width="200">
 </p>
----
 
 ## Conjugation
 
@@ -156,7 +154,7 @@ Her kelime bağımsız işlendiği için aynı section içerisindeki kelimeler z
 
 ---
 
-## 🔄 Free Practice
+## Free Practice
 
 Bir section için due kelime bulunmasa bile kullanıcı isterse section'ı tekrar çalışabiliyor.
 
