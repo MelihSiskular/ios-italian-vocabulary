@@ -74,9 +74,10 @@ gibi yeni çalışma türleri mevcut sistemi bozmadan eklenebilir.
 
 ## Conjugation
 
-<p align="center">
+<p align="leading">
 <img src="docs/images/8.PNG" width="200">
 <img src="docs/images/9.PNG" width="200">
+<img src="docs/images/15.PNG" width="200">
 </p>
 
 ## History & Progress
