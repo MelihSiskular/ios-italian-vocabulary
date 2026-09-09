@@ -55,37 +55,37 @@ gibi yeni çalışma türleri mevcut sistemi bozmadan eklenebilir.
 ## Widget & Notifications & Vocab Search
 
 <p align="center">
-<img src="docs/images/1.PNG" width="220">
-<img src="docs/images/3.PNG" width="220">
-<img src="docs/images/2.PNG" width="220">
-<img src="docs/images/14.PNG" width="220">
+<img src="docs/images/1.PNG" width="200">
+<img src="docs/images/3.PNG" width="200">
+<img src="docs/images/2.PNG" width="200">
+<img src="docs/images/14.PNG" width="200">
 </p>
 ---
 
 ## Vocabulary Quiz
 
 <p align="center">
-<img src="docs/images/4.PNG" width="220">
-<img src="docs/images/5.PNG" width="220">
-<img src="docs/images/6.PNG" width="220">
-<img src="docs/images/7.PNG" width="220">
+<img src="docs/images/4.PNG" width="200">
+<img src="docs/images/5.PNG" width="200">
+<img src="docs/images/6.PNG" width="200">
+<img src="docs/images/7.PNG" width="200">
 </p>
 ---
 
 ## Conjugation
 
 <p align="center">
-<img src="docs/images/8.PNG" width="220">
-<img src="docs/images/9.PNG" width="220">
+<img src="docs/images/8.PNG" width="200">
+<img src="docs/images/9.PNG" width="200">
 </p>
 
 ## History & Progress
 
 <p align="center">
-<img src="docs/images/10.PNG" width="220">
-<img src="docs/images/11.PNG" width="220">
-<img src="docs/images/12.PNG" width="220">
-<img src="docs/images/13.PNG" width="220">
+<img src="docs/images/10.PNG" width="200">
+<img src="docs/images/11.PNG" width="200">
+<img src="docs/images/12.PNG" width="200">
+<img src="docs/images/13.PNG" width="200">
 </p>
 
 ---
