@@ -26,6 +26,17 @@ final class HomeViewModel: ObservableObject {
     private let widgetCoordinator =
     WidgetWordCoordinator()
     
+    var dueSectionCount: Int {
+        
+        sections.filter { section in
+            
+            !dueWords(
+                for: section
+            ).isEmpty
+        }
+        .count
+    }
+    
     func loadSections() async {
         
         
@@ -60,14 +71,25 @@ final class HomeViewModel: ObservableObject {
                     progress.map {
                         ($0.wordId, $0)
                     }
-            )
-           
-           
+            )           
             
             widgetCoordinator.refreshWidgetWord(
                 words: words,
                 progress: progress
             )
+            
+            await AppBadgeManager
+                .setCount(
+                    dueSectionCount
+                )
+            
+            await ReviewNotificationManager
+                .shared
+                .synchronizeReviewNotifications(
+                    sections: sections,
+                    progressByWordId:
+                        progressByWordId
+                )
             
             print(
                 "✅ Sections loaded:",

@@ -54,14 +54,53 @@ struct WordDetailView: View {
             spacing: AppTheme.Spacing.md
         ) {
             
-            Text(word.italian)
-                .font(
-                    .system(
-                        size: 38,
-                        weight: .bold,
-                        design: .rounded
+            HStack(
+                alignment: .center,
+                spacing: AppTheme.Spacing.md
+            ) {
+                
+                Text(word.italian)
+                    .font(
+                        .system(
+                            size: 38,
+                            weight: .bold,
+                            design: .rounded
+                        )
                     )
+                
+                Spacer()
+                
+                Button {
+                    
+                    PronunciationService
+                        .shared
+                        .speakItalian(
+                            word.italian
+                        )
+                    
+                } label: {
+                    
+                    Image(
+                        systemName:
+                            "speaker.wave.2.fill"
+                    )
+                    .font(
+                        .title2
+                    )
+                    .frame(
+                        width: 44,
+                        height: 44
+                    )
+                    .contentShape(
+                        Rectangle()
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(
+                    "Pronounce \(word.italian)"
                 )
+            }
+            
             
             VStack(
                 alignment: .leading,
@@ -79,12 +118,17 @@ struct WordDetailView: View {
                         )
                 }
                 
+                
                 if let english = word.english,
                    !english.isEmpty {
                     
                     Text(english)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .font(
+                            .subheadline
+                        )
+                        .foregroundStyle(
+                            .secondary
+                        )
                 }
             }
         }
@@ -93,7 +137,6 @@ struct WordDetailView: View {
             alignment: .leading
         )
     }
-    
     
     // MARK: - Definition
     

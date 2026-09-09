@@ -221,12 +221,14 @@ final class QuizViewModel: ObservableObject {
         }
     }
     
-    func continueQuiz() {
+    func continueQuiz() async {
         
         answerText = ""
         feedback = nil
         
         if pendingQuestions.isEmpty {
+            
+            await finishSessionIfNeeded()
             
             isFinished = true
             currentQuestion = nil
@@ -383,6 +385,16 @@ final class QuizViewModel: ObservableObject {
                 )
             }
             
+            if mode == .freePractice {
+                
+                try await updateFreePracticeProgress()
+                
+                print(
+                    "✅ Free practice progress checked:",
+                    quizWords.count
+                )
+            }
+            
         } catch {
             
             sessionFinished = false
@@ -423,6 +435,55 @@ final class QuizViewModel: ObservableObject {
                 passed
                 ? "✅ Review passed word \(progress.wordId)"
                 : "🔁 Review failed word \(progress.wordId)"
+            )
+        }
+    }
+    
+    private func updateFreePracticeProgress()
+    async throws {
+        
+        let wordIds =
+        quizWords.map(\.id)
+        
+        let existingProgress =
+        try await wordProgressService
+            .fetchProgress(
+                for: wordIds
+            )
+        
+        for progress in existingProgress {
+            
+            let failed =
+            failedWordIds.contains(
+                progress.wordId
+            )
+            
+            // Doğru bilinen kelime:
+            // mastery / streak / next review değişmez.
+            guard failed else {
+                
+                print(
+                    "✅ Free practice correct:",
+                    "word \(progress.wordId)",
+                    "— SRS unchanged"
+                )
+                
+                continue
+            }
+            
+            // Free Practice sırasında bir kez bile
+            // yanlış yapıldıysa normal failure
+            // davranışını uygula.
+            try await wordProgressService
+                .updateAfterReview(
+                    progress: progress,
+                    passed: false
+                )
+            
+            print(
+                "🔁 Free practice failed:",
+                "word \(progress.wordId)",
+                "— reset and due now"
             )
         }
     }

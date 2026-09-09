@@ -228,21 +228,68 @@ final class ProgressViewModel: ObservableObject {
         }.count
     }
     
+    private var recentSessionIds:
+    Set<UUID> {
+        
+        let sessionsWithAttempts =
+        Set(
+            attempts.map {
+                $0.sessionId
+            }
+        )
+        
+        let recentSessions =
+        sessions
+            .filter {
+                sessionsWithAttempts
+                    .contains($0.id)
+            }
+            .sorted {
+                $0.startedAt
+                > $1.startedAt
+            }
+            .prefix(20)
+        
+        return Set(
+            recentSessions.map {
+                $0.id
+            }
+        )
+    }
+    
+    var recentAttempts:
+    [ReviewAttemptRecord] {
+        
+        let ids = recentSessionIds
+        
+        return attempts.filter {
+            ids.contains(
+                $0.sessionId
+            )
+        }
+    }
+    
+    var recentSessionCount: Int {
+        recentSessionIds.count
+    }
+    
     var accuracy: Double {
         
-        guard !attempts.isEmpty else {
+        guard !recentAttempts.isEmpty
+        else {
             return 0
         }
         
-        let correct = attempts.filter {
+        let correct =
+        recentAttempts.filter {
             $0.isCorrect
-        }.count
+        }
+        .count
         
         return Double(correct)
-        / Double(attempts.count)
+        / Double(recentAttempts.count)
         * 100
     }
-    
     
     // MARK: - Error Intelligence
     

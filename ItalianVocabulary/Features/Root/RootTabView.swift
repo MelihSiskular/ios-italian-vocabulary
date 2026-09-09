@@ -4,43 +4,106 @@
 //
 //  Created by Melih Şişkular on 25.08.2026.
 //
+
 import SwiftUI
+
+
+private enum RootTab:
+    Hashable {
+    
+    case practice
+    case progress
+    case history
+}
+
 
 struct RootTabView: View {
     
     @Binding var widgetWordId: Int?
     
+    @ObservedObject private var
+    reviewRouter =
+    ReviewNotificationRouter.shared
+    
+    @State private var selectedTab:
+    RootTab = .practice
+    
     
     var body: some View {
         
-        TabView {
+        TabView(
+            selection: $selectedTab
+        ) {
             
-            HomeView()
-                .tabItem {
-                    Label(
-                        "Practice",
-                        systemImage:
-                            "square.grid.2x2"
-                    )
-                }
+            HomeView(
+                requestedSectionNumber:
+                    $reviewRouter
+                    .pendingSectionNumber
+            )
+            .tabItem {
+                
+                Label(
+                    "Practice",
+                    systemImage:
+                        "square.grid.2x2"
+                )
+            }
+            .tag(
+                RootTab.practice
+            )
+            
             
             LearningProgressView()
                 .tabItem {
+                    
                     Label(
                         "Progress",
                         systemImage:
                             "chart.bar"
                     )
                 }
+                .tag(
+                    RootTab.progress
+                )
+            
             
             HistoryView()
                 .tabItem {
+                    
                     Label(
                         "History",
                         systemImage:
                             "clock.arrow.circlepath"
                     )
                 }
+                .tag(
+                    RootTab.history
+                )
+        }
+        .onAppear {
+            
+            if reviewRouter
+                .pendingSectionNumber
+                != nil {
+                
+                selectedTab =
+                    .practice
+            }
+        }
+        .onChange(
+            of:
+                reviewRouter
+                .pendingSectionNumber
+        ) { _, sectionNumber in
+            
+            guard sectionNumber
+                    != nil
+            else {
+                return
+            }
+            
+            selectedTab =
+                .practice
         }
         .sheet(
             isPresented:
@@ -52,7 +115,7 @@ struct RootTabView: View {
     }
     
     
-    // MARK: - Presentation
+    // MARK: - Widget Presentation
     
     private var widgetDetailPresented:
     Binding<Bool> {
@@ -60,12 +123,14 @@ struct RootTabView: View {
         Binding(
             
             get: {
+                
                 widgetWordId != nil
             },
             
             set: { isPresented in
                 
                 if !isPresented {
+                    
                     widgetWordId = nil
                 }
             }
@@ -74,7 +139,8 @@ struct RootTabView: View {
     
     
     @ViewBuilder
-    private var widgetDetailSheet: some View {
+    private var widgetDetailSheet:
+    some View {
         
         if let wordId =
             widgetWordId {
@@ -92,6 +158,7 @@ struct RootTabView: View {
                     ) {
                         
                         Button("Done") {
+                            
                             widgetWordId = nil
                         }
                     }

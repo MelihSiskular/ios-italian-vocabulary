@@ -21,16 +21,17 @@ struct HistoryView: View {
     // User explicitly wanted these two
     // chart series colors.
     
-    private let practicedColor =
+    private let attemptsColor =
     Color.orange
     
-    private let successfulColor =
+    private let correctColor =
     Color(
         red: 0.10,
         green: 0.38,
         blue: 0.22
     )
-    
+    private let averageColor =
+    Color.red
     
     // MARK: - Body
     
@@ -67,8 +68,11 @@ struct HistoryView: View {
             .navigationBarTitleDisplayMode(
                 .large
             )
-            .task {
-                await viewModel.load()
+            .onAppear {
+                
+                Task {
+                    await viewModel.load()
+                }
             }
             .refreshable {
                 await viewModel.load()
@@ -129,7 +133,7 @@ struct HistoryView: View {
                     .font(.title2.bold())
                 
                 Text(
-                    "Unique words practiced and successfully completed."
+                    "All quiz attempts and correct answers from the last 30 days."
                 )
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
@@ -167,19 +171,13 @@ struct HistoryView: View {
                     item.date
                 ),
                 y: .value(
-                    "Practiced",
-                    item.practicedWords
+                    "Attempts",
+                    item.attempts
                 )
             )
             .foregroundStyle(
-                practicedColor
+                attemptsColor
             )
-            .lineStyle(
-                StrokeStyle(
-                    lineWidth: 2
-                )
-            )
-            
             
             PointMark(
                 x: .value(
@@ -187,15 +185,14 @@ struct HistoryView: View {
                     item.date
                 ),
                 y: .value(
-                    "Practiced",
-                    item.practicedWords
+                    "Attempts",
+                    item.attempts
                 )
             )
             .foregroundStyle(
-                practicedColor
+                attemptsColor
             )
             .symbolSize(18)
-            
             
             // MARK: Successful
             
@@ -205,19 +202,13 @@ struct HistoryView: View {
                     item.date
                 ),
                 y: .value(
-                    "Successful",
-                    item.successfulWords
+                    "Correct",
+                    item.correctAttempts
                 )
             )
             .foregroundStyle(
-                successfulColor
+                correctColor
             )
-            .lineStyle(
-                StrokeStyle(
-                    lineWidth: 2
-                )
-            )
-            
             
             PointMark(
                 x: .value(
@@ -225,14 +216,48 @@ struct HistoryView: View {
                     item.date
                 ),
                 y: .value(
-                    "Successful",
-                    item.successfulWords
+                    "Correct",
+                    item.correctAttempts
                 )
             )
             .foregroundStyle(
-                successfulColor
+                correctColor
             )
             .symbolSize(18)
+            
+            if viewModel.averageAttemptsPerActiveDay > 0 {
+                
+                RuleMark(
+                    y: .value(
+                        "Average",
+                        viewModel.averageAttemptsPerActiveDay
+                    )
+                )
+                .foregroundStyle(
+                    averageColor.opacity(0.75)
+                )
+                .lineStyle(
+                    StrokeStyle(
+                        lineWidth: 1.5,
+                        dash: [6, 5]
+                    )
+                )
+                .annotation(
+                    position: .top,
+                    alignment: .leading
+                ) {
+                    
+                    Text(
+                        "\(Int(viewModel.averageAttemptsPerActiveDay.rounded()))"
+                    )
+                    .font(
+                        .caption2.weight(.medium)
+                    )
+                    .foregroundStyle(
+                        averageColor.opacity(0.55)
+                    )
+                }
+            }
         }
         .frame(height: 220)
         .chartYScale(
@@ -291,8 +316,8 @@ struct HistoryView: View {
         viewModel.dailyActivity
             .map {
                 max(
-                    $0.practicedWords,
-                    $0.successfulWords
+                    $0.attempts,
+                    $0.correctAttempts
                 )
             }
             .max() ?? 0
@@ -311,17 +336,21 @@ struct HistoryView: View {
         ) {
             
             legendItem(
-                title: "Practiced",
-                color: practicedColor
+                title: "Attempts",
+                color: attemptsColor
             )
             
             legendItem(
-                title: "Successful",
-                color: successfulColor
+                title: "Correct",
+                color: correctColor
+            )
+            
+            legendItem(
+                title: "Avg",
+                color: averageColor
             )
         }
     }
-    
     
     private func legendItem(
         title: String,

@@ -120,24 +120,26 @@ final class WordProgressService {
             nextReviewDate = calculatedDate
             
         } else {
-            
-            newMasteryLevel =
-            max(
-                1,
-                progress.masteryLevel - 1
-            )
-            
-            newCorrectStreak = 0
-            
-            newTotalCorrect =
-            progress.totalCorrect
-            
-            newTotalWrong =
-            progress.totalWrong + 1
-            
-            // Başarısız kelime due olarak kalır.
-            nextReviewDate = now
-        }
+
+    // Review sırasında bir kez bile
+    // yanlış yapılan kelime tekrar
+    // başlangıç seviyesine düşer.
+    newMasteryLevel = 1
+
+    newCorrectStreak = 0
+
+    newTotalCorrect =
+        progress.totalCorrect
+
+    newTotalWrong =
+        progress.totalWrong + 1
+
+    // Başarısız kelime review listesinden
+    // çıkmasın. Kullanıcı isterse hemen
+    // tekrar çalışabilsin.
+    nextReviewDate = now
+}
+
         
         let payload =
         ReviewProgressUpdatePayload(

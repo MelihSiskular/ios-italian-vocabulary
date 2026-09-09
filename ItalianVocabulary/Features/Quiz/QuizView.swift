@@ -16,6 +16,8 @@ struct QuizView: View {
     
     @State private var actionTitle = "Check"
     
+    @State private var isFinalizingQuiz = false
+    
     init(
         section: WordSection,
         words: [Word],
@@ -37,30 +39,59 @@ struct QuizView: View {
     
     var body: some View {
         
-        Group {
+        ZStack {
             
-            if viewModel.isFinished {
+            Group {
                 
-                QuizResultView(
-                    result: viewModel.result
-                )
-                .task {
-                    await viewModel.finishSessionIfNeeded()
+                if viewModel.isFinished {
+                    
+                    QuizResultView(
+                        result: viewModel.result
+                    )
+                    
+                } else if let question =
+                            viewModel.currentQuestion {
+                    
+                    questionView(question)
                 }
+            }
+            .blur(
+                radius:
+                    isFinalizingQuiz
+                ? 3
+                : 0
+            )
+            .allowsHitTesting(
+                !isFinalizingQuiz
+            )
+            
+            
+            if isFinalizingQuiz {
                 
-            } else if let question =
-                        viewModel.currentQuestion {
-                
-                questionView(question)
+                finalizingOverlay
+                    .transition(
+                        .opacity
+                    )
             }
         }
+        .animation(
+            .easeInOut(
+                duration: 0.18
+            ),
+            value:
+                isFinalizingQuiz
+        )
         .navigationBarBackButtonHidden(
             !viewModel.isFinished
         )
-        .toolbar(.hidden, for: .tabBar)
+        .toolbar(
+            .hidden,
+            for: .tabBar
+        )
         .task {
             
-            await viewModel.startSessionIfNeeded()
+            await viewModel
+                .startSessionIfNeeded()
         }
     }
     
@@ -292,8 +323,10 @@ struct QuizView: View {
                 }
                 
             } else {
-                
-                continueQuiz()
+
+                Task {
+                    await continueQuiz()
+                }
             }
         }
     }
@@ -344,6 +377,7 @@ struct QuizView: View {
                     : .secondary
                 )
                 
+                
                 VStack(
                     alignment: .leading,
                     spacing: AppTheme.Spacing.sm
@@ -355,6 +389,7 @@ struct QuizView: View {
                         )
                     )
                     .font(.headline)
+                    
                     
                     if !feedback.hasPrefix(
                         "Esatto"
@@ -370,6 +405,7 @@ struct QuizView: View {
                         )
                     }
                     
+                    
                     if let example =
                         question.word.example1It,
                        !example.isEmpty {
@@ -384,7 +420,37 @@ struct QuizView: View {
                     }
                 }
                 
+                
                 Spacer()
+                
+                
+                Button {
+                    
+                    PronunciationService
+                        .shared
+                        .speakItalian(
+                            question.word.italian
+                        )
+                    
+                } label: {
+                    
+                    Image(
+                        systemName:
+                            "speaker.wave.2.fill"
+                    )
+                    .font(.title3)
+                    .frame(
+                        width: 44,
+                        height: 44
+                    )
+                    .contentShape(
+                        Rectangle()
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(
+                    "Pronounce \(question.word.italian)"
+                )
             }
         }
     }
@@ -426,8 +492,10 @@ struct QuizView: View {
                     }
                     
                 } else {
-                    
-                    continueQuiz()
+
+                    Task {
+                        await continueQuiz()
+                    }
                 }
                 
             } label: {
@@ -535,27 +603,116 @@ struct QuizView: View {
         }
     }
     
-    private func continueQuiz() {
+    private func continueQuiz() async {
         
-        viewModel.continueQuiz()
+        let isLastQuestion =
+        viewModel.totalTaskCount > 0
+        &&
+        viewModel.completedTaskCount
+        == viewModel.totalTaskCount
         
-        // Yeni soru geldikten sonra klavyeyi aç.
+        
+        if isLastQuestion {
+            
+            withAnimation(
+                .easeInOut(
+                    duration: 0.18
+                )
+            ) {
+                
+                isFinalizingQuiz = true
+            }
+        }
+        
+        
+        await viewModel
+            .continueQuiz()
+        
+        
+        if viewModel.isFinished {
+            
+            withAnimation(
+                .easeInOut(
+                    duration: 0.18
+                )
+            ) {
+                
+                isFinalizingQuiz = false
+            }
+            
+            return
+        }
+        
+        
         DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.12
+            deadline:
+                    .now() + 0.12
         ) {
+            
             isAnswerFocused = true
         }
         
-        // Button yukarı yerleşince içeriği değiştir.
+        
         DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.32
+            deadline:
+                    .now() + 0.32
         ) {
             
             withAnimation(
-                .easeInOut(duration: 0.18)
+                .easeInOut(
+                    duration: 0.18
+                )
             ) {
+                
                 actionTitle = "Check"
             }
         }
+    }
+    
+    // MARK: - Finalizing
+    
+    private var finalizingOverlay:
+    some View {
+        
+        VStack(
+            spacing:
+                AppTheme.Spacing.md
+        ) {
+            
+            ProgressView()
+                .controlSize(
+                    .large
+                )
+            
+            
+            Text(
+                "Updating review..."
+            )
+            .font(
+                .headline
+            )
+            
+            
+            Text(
+                "Saving your progress."
+            )
+            .font(
+                .subheadline
+            )
+            .foregroundStyle(
+                .secondary
+            )
+        }
+        .padding(
+            AppTheme.Spacing.xl
+        )
+        .background(
+            .regularMaterial,
+            in:
+                RoundedRectangle(
+                    cornerRadius: 22,
+                    style: .continuous
+                )
+        )
     }
 }

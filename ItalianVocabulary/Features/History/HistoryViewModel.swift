@@ -55,8 +55,8 @@ struct DailyLearningActivity:
     
     let date: Date
     
-    let practicedWords: Int
-    let successfulWords: Int
+    let attempts: Int
+    let correctAttempts: Int
     
     var id: Date {
         date
@@ -93,6 +93,26 @@ final class HistoryViewModel:
     @Published private(set)
     var dailyActivity:
     [DailyLearningActivity] = []
+    
+    var averageAttemptsPerActiveDay: Double {
+        
+        let activeDays =
+        dailyActivity.filter {
+            $0.attempts > 0
+        }
+        
+        guard !activeDays.isEmpty else {
+            return 0
+        }
+        
+        let totalAttempts =
+        activeDays.reduce(0) {
+            $0 + $1.attempts
+        }
+        
+        return Double(totalAttempts)
+        / Double(activeDays.count)
+    }
     
     @Published private(set)
     var isLoading = false
@@ -158,6 +178,8 @@ final class HistoryViewModel:
     
     func load() async {
         
+        
+        
         isLoading = true
         errorMessage = nil
         
@@ -167,29 +189,27 @@ final class HistoryViewModel:
         
         do {
             
-            async let chartAttemptsTask =
-            analyticsService
-                .fetchAttempts(
-                    from:
-                        chartRange.start,
-                    toExclusive:
-                        chartRange.end
-                )
+            async let pageTask =
+            fetchCurrentPage()
+            
+            async let chartTask =
+            analyticsService.fetchAttempts(
+                from: chartRange.start,
+                toExclusive: chartRange.end
+            )
             
             let page =
-            try await fetchCurrentPage()
+            try await pageTask
             
             let pageAttempts =
             try await analyticsService
                 .fetchAttempts(
                     sessionIds:
-                        page.sessions.map(
-                            \.id
-                        )
+                        page.sessions.map(\.id)
                 )
             
             let chartAttempts =
-            try await chartAttemptsTask
+            try await chartTask
             
             apply(
                 page: page,
@@ -541,10 +561,8 @@ final class HistoryViewModel:
             )
         }
         
-        
         var result:
         [DailyLearningActivity] = []
-        
         
         for offset in 0..<30 {
             
@@ -561,88 +579,27 @@ final class HistoryViewModel:
             let dayAttempts =
             attemptsByDay[day] ?? []
             
+            let totalAttempts =
+            dayAttempts.count
             
-            // Unique words encountered
-            let practicedWords =
-            Set(
-                dayAttempts.map {
-                    $0.wordId
-                }
-            )
+            let correctAttempts =
+            dayAttempts.filter {
+                $0.isCorrect
+            }
             .count
-            
-            
-            // MARK: Successful Words
-            
-            let attemptsBySession =
-            Dictionary(
-                grouping: dayAttempts
-            ) {
-                $0.sessionId
-            }
-            
-            
-            var successfulWordIds:
-            Set<Int> = []
-            
-            
-            for (_, sessionAttempts)
-                    in attemptsBySession {
-                
-                let attemptsByWord =
-                Dictionary(
-                    grouping:
-                        sessionAttempts
-                ) {
-                    $0.wordId
-                }
-                
-                
-                for (
-                    wordId,
-                    wordAttempts
-                ) in attemptsByWord {
-                    
-                    let cleanLanguages =
-                    Set(
-                        wordAttempts
-                            .filter {
-                                $0.isCorrect
-                                &&
-                                $0.isFirstTryCorrect
-                            }
-                            .map {
-                                $0.clueLanguage
-                            }
-                    )
-                    
-                    
-                    if cleanLanguages
-                        .contains("tr"),
-                       cleanLanguages
-                        .contains("en") {
-                        
-                        successfulWordIds
-                            .insert(wordId)
-                    }
-                }
-            }
-            
             
             result.append(
                 DailyLearningActivity(
                     date: day,
-                    practicedWords:
-                        practicedWords,
-                    successfulWords:
-                        successfulWordIds.count
+                    attempts: totalAttempts,
+                    correctAttempts:
+                        correctAttempts
                 )
             )
         }
         
         return result
     }
-    
     
     // MARK: - Grouped Sessions
     
@@ -845,5 +802,20 @@ final class HistoryViewModel:
         return session.passed
         ? "checkmark"
         : "arrow.clockwise"
+    }
+    
+    private func refreshDailyActivity() async throws {
+        
+        let chartAttempts =
+        try await analyticsService
+            .fetchAttempts(
+                from: chartRange.start,
+                toExclusive: chartRange.end
+            )
+        
+        dailyActivity =
+        makeDailyActivity(
+            from: chartAttempts
+        )
     }
 }

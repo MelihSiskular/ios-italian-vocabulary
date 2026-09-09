@@ -19,6 +19,10 @@ final class AnalyticsService {
     
     private let client = SupabaseManager.client
     
+    private let attemptPageSize = 500
+    
+    
+    
     
     // MARK: - Existing Progress Analytics
     
@@ -64,23 +68,52 @@ final class AnalyticsService {
     
     func fetchAttempts() async throws -> [ReviewAttemptRecord] {
         
-        let session = try await client.auth.session
+        let session =
+        try await client.auth.session
         
-        let attempts: [ReviewAttemptRecord] = try await client
-            .from("review_attempts")
-            .select()
-            .eq(
-                "user_id",
-                value: session.user.id
-            )
-            .order(
-                "created_at",
-                ascending: false
-            )
-            .execute()
-            .value
+        var allAttempts:
+        [ReviewAttemptRecord] = []
         
-        return attempts
+        var from = 0
+        
+        while true {
+            
+            let to =
+            from + attemptPageSize - 1
+            
+            let page:
+            [ReviewAttemptRecord] =
+            try await client
+                .from("review_attempts")
+                .select()
+                .eq(
+                    "user_id",
+                    value: session.user.id
+                )
+                .order(
+                    "created_at",
+                    ascending: false
+                )
+                .range(
+                    from: from,
+                    to: to
+                )
+                .execute()
+                .value
+            
+            allAttempts.append(
+                contentsOf: page
+            )
+            
+            if page.count
+                < attemptPageSize {
+                break
+            }
+            
+            from += attemptPageSize
+        }
+        
+        return allAttempts
     }
     
     
@@ -230,28 +263,54 @@ final class AnalyticsService {
             $0.uuidString
         }
         
-        let attempts: [ReviewAttemptRecord] =
-        try await client
-            .from("review_attempts")
-            .select()
-            .eq(
-                "user_id",
-                value: authSession.user.id
-            )
-            .in(
-                "session_id",
-                values: values
-            )
-            .order(
-                "created_at",
-                ascending: true
-            )
-            .execute()
-            .value
+        var allAttempts:
+        [ReviewAttemptRecord] = []
         
-        return attempts
+        var from = 0
+        
+        while true {
+            
+            let to =
+            from + attemptPageSize - 1
+            
+            let page:
+            [ReviewAttemptRecord] =
+            try await client
+                .from("review_attempts")
+                .select()
+                .eq(
+                    "user_id",
+                    value: authSession.user.id
+                )
+                .in(
+                    "session_id",
+                    values: values
+                )
+                .order(
+                    "created_at",
+                    ascending: true
+                )
+                .range(
+                    from: from,
+                    to: to
+                )
+                .execute()
+                .value
+            
+            allAttempts.append(
+                contentsOf: page
+            )
+            
+            if page.count
+                < attemptPageSize {
+                break
+            }
+            
+            from += attemptPageSize
+        }
+        
+        return allAttempts
     }
-    
     
     // MARK: - Last 30 Days Chart
     
@@ -263,32 +322,82 @@ final class AnalyticsService {
         let authSession =
         try await client.auth.session
         
-        let attempts: [ReviewAttemptRecord] =
-        try await client
-            .from("review_attempts")
-            .select()
-            .eq(
-                "user_id",
-                value: authSession.user.id
-            )
-            .gte(
-                "created_at",
-                value: isoString(startDate)
-            )
-            .lt(
-                "created_at",
-                value: isoString(endDate)
-            )
-            .order(
-                "created_at",
-                ascending: true
-            )
-            .execute()
-            .value
+        var allAttempts:
+        [ReviewAttemptRecord] = []
         
-        return attempts
+        var from = 0
+        
+        while true {
+            
+            let to =
+            from + attemptPageSize - 1
+            
+            let page:
+            [ReviewAttemptRecord] =
+            try await client
+                .from("review_attempts")
+                .select()
+                .eq(
+                    "user_id",
+                    value: authSession.user.id
+                )
+                .gte(
+                    "created_at",
+                    value:
+                        isoString(
+                            startDate
+                        )
+                )
+                .lt(
+                    "created_at",
+                    value:
+                        isoString(
+                            endDate
+                        )
+                )
+                .order(
+                    "created_at",
+                    ascending: true
+                )
+                .range(
+                    from: from,
+                    to: to
+                )
+                .execute()
+                .value
+            
+            allAttempts.append(
+                contentsOf: page
+            )
+            
+            if page.count
+                < attemptPageSize {
+                break
+            }
+            
+            from += attemptPageSize
+        }
+        
+        print(
+            "📊 30-day attempts fetched:",
+            allAttempts.count
+        )
+        
+        if let first =
+            allAttempts.first,
+           let last =
+            allAttempts.last {
+            
+            print(
+                "📅 Attempt range:",
+                first.createdAt,
+                "→",
+                last.createdAt
+            )
+        }
+        
+        return allAttempts
     }
-    
     
     // MARK: - Date Encoding
     

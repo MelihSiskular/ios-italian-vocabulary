@@ -86,6 +86,7 @@ struct QuizResultView: View {
                 HapticManager.success()
             }
         }
+        .navigationBarBackButtonHidden()
     }
     
     
@@ -360,6 +361,7 @@ struct QuizResultView: View {
             )
         }
         .background(.bar)
+        
     }
     
     

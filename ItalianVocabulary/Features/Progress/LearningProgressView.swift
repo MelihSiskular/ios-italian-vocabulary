@@ -1,5 +1,5 @@
 //
-//  ProgressView.swift
+//  LearningProgressView.swift
 //  ItalianVocabulary
 //
 //  Created by Melih Şişkular on 25.08.2026.
@@ -22,7 +22,6 @@ struct LearningProgressView: View {
             spacing: AppTheme.Layout.gridSpacing
         )
     ]
-    
     
     // MARK: - Body
     
@@ -65,7 +64,6 @@ struct LearningProgressView: View {
         }
     }
     
-    
     // MARK: - Content
     
     private var content: some View {
@@ -97,7 +95,6 @@ struct LearningProgressView: View {
             )
         }
     }
-    
     
     // MARK: - Hero
     
@@ -149,7 +146,6 @@ struct LearningProgressView: View {
         }
         
         if viewModel.dueWords > 0 {
-            
             return viewModel.dueWords == 1
             ? "1 word is ready for review."
             : "\(viewModel.dueWords) words are ready for review."
@@ -158,8 +154,19 @@ struct LearningProgressView: View {
         return "Your learned vocabulary is up to date."
     }
     
-    
     // MARK: - Overview
+    
+    private var recentAttemptCount: Int {
+        viewModel.recentAttempts.count
+    }
+    
+    private var recentCorrectCount: Int {
+        viewModel.recentAttempts
+            .filter {
+                $0.isCorrect
+            }
+            .count
+    }
     
     private var overviewSection: some View {
         
@@ -168,34 +175,14 @@ struct LearningProgressView: View {
             spacing: AppTheme.Spacing.md
         ) {
             
-            sectionTitle(
-                "Overview"
-            )
+            sectionTitle("Overview")
+            
+            recentAccuracyCard
             
             LazyVGrid(
                 columns: metricColumns,
-                spacing:
-                    AppTheme.Layout.gridSpacing
+                spacing: AppTheme.Spacing.md
             ) {
-                
-                metricCard(
-                    title: "Accuracy",
-                    value:
-                        String(
-                            format: "%.1f%%",
-                            viewModel.accuracy
-                        ),
-                    systemImage:
-                        "scope"
-                )
-                
-                metricCard(
-                    title: "Due now",
-                    value:
-                        "\(viewModel.dueWords)",
-                    systemImage:
-                        "clock.arrow.circlepath"
-                )
                 
                 metricCard(
                     title: "Sessions",
@@ -216,6 +203,86 @@ struct LearningProgressView: View {
         }
     }
     
+    private var recentAccuracyCard: some View {
+        
+        AppCard {
+            
+            VStack(
+                alignment: .leading,
+                spacing: AppTheme.Spacing.md
+            ) {
+                
+                HStack(
+                    alignment: .firstTextBaseline
+                ) {
+                    
+                    VStack(
+                        alignment: .leading,
+                        spacing: AppTheme.Spacing.xs
+                    ) {
+                        
+                        Label(
+                            "Recent Accuracy",
+                            systemImage: "scope"
+                        )
+                        .font(.headline)
+                        
+                        Text(
+                            "Last \(viewModel.recentSessionCount) sessions"
+                        )
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    }
+                    
+                    Spacer()
+                    
+                    Text(
+                        String(
+                            format:
+                                "%.1f%%",
+                            viewModel.accuracy
+                        )
+                    )
+                    .font(
+                        .system(
+                            size: 34,
+                            weight: .bold,
+                            design: .rounded
+                        )
+                    )
+                }
+                
+                ProgressView(
+                    value:
+                        min(
+                            max(
+                                viewModel.accuracy,
+                                0
+                            ),
+                            100
+                        ),
+                    total: 100
+                )
+                .progressViewStyle(.linear)
+                .tint(.accentColor)
+                
+                HStack {
+                    
+                    Text(
+                        "\(recentCorrectCount) correct"
+                    )
+                    
+                    Spacer()
+                    
+                    Text(
+                        "\(recentAttemptCount) attempts"
+                    )
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
+        }
+    }
     
     // MARK: - Mastery
     
@@ -337,22 +404,28 @@ struct LearningProgressView: View {
             
             Spacer()
             
-            Text(
-                "\(count)"
-            )
-            .font(
-                .title3.weight(
-                    .semibold
+            VStack(
+                alignment: .trailing,
+                spacing: 2
+            ) {
+                
+                Text(
+                    "\(count)"
                 )
-            )
-            
-            Text(
-                count == 1
-                ? "word"
-                : "words"
-            )
-            .font(.caption)
-            .foregroundStyle(.secondary)
+                .font(
+                    .title3.weight(
+                        .semibold
+                    )
+                )
+                
+                Text(
+                    count == 1
+                    ? "word"
+                    : "words"
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
         }
         .padding(
             .vertical,
@@ -382,7 +455,6 @@ struct LearningProgressView: View {
             return "Mastered"
         }
     }
-    
     
     // MARK: - Hardest Words
     
@@ -554,7 +626,6 @@ struct LearningProgressView: View {
         return "exclamationmark"
     }
     
-    
     // MARK: - Mistake Types
     
     private var mistakeTypesSection: some View {
@@ -639,7 +710,6 @@ struct LearningProgressView: View {
         )
     }
     
-    
     // MARK: - Components
     
     private func metricCard(
@@ -719,7 +789,6 @@ struct LearningProgressView: View {
         }
     }
     
-    
     // MARK: - Error Helpers
     
     private func errorTitle(
@@ -773,7 +842,6 @@ struct LearningProgressView: View {
             return "exclamationmark"
         }
     }
-    
     
     // MARK: - Hard Word Helper
     

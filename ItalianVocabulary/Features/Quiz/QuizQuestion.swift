@@ -41,16 +41,23 @@ struct QuizQuestion: Identifiable {
 }
 
 enum QuizMode: Equatable {
+    
     case initialSection
     case sectionReview
+    case freePractice
     
     var databaseValue: String {
+        
         switch self {
+            
         case .initialSection:
             return "initial_section"
             
         case .sectionReview:
             return "section_review"
+            
+        case .freePractice:
+            return "free_practice"
         }
     }
 }

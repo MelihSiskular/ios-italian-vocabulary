@@ -214,6 +214,53 @@ enum WidgetWordStore {
             ) as? Date
     }
     
+    // MARK: - Currently Displayed Word
+    
+    static func currentDisplayedWord(
+        at date: Date = Date()
+    ) -> WidgetWord? {
+        
+        let rotation =
+        loadRotation()
+        
+        // Rotation yoksa eski current-word
+        // cache'ini fallback olarak kullan.
+        guard !rotation.isEmpty else {
+            return load()
+        }
+        
+        guard let createdAt =
+                rotationCreatedAt()
+        else {
+            return load()
+            ?? rotation.first
+        }
+        
+        let rotationInterval:
+        TimeInterval =
+        3 * 60 * 60
+        
+        let elapsed =
+        max(
+            0,
+            date.timeIntervalSince(
+                createdAt
+            )
+        )
+        
+        let elapsedSlots =
+        Int(
+            elapsed
+            / rotationInterval
+        )
+        
+        let index =
+        elapsedSlots
+        % rotation.count
+        
+        return rotation[index]
+    }
+    
     
     // MARK: - Clear
     
