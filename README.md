@@ -1,107 +1,409 @@
 # 🇮🇹 Italian Vocabulary — iOS
 
-Kendi İtalyanca öğrenme sürecim için geliştirdiğim, **SwiftUI, Supabase, WidgetKit ve Swift Charts** tabanlı iOS kelime öğrenme uygulaması.
+Kendi İtalyanca öğrenme sürecim için geliştirdiğim, **SwiftUI, Supabase, WidgetKit, Swift Charts, Notifications ve iOS Text-to-Speech** tabanlı kişisel bir dil öğrenme uygulaması.
 
-Uygulama; kelimeleri bölümler halinde çalışmayı, aktif hatırlama quizleri çözmeyi, öğrenme ilerlemesini ve hataları takip etmeyi, geçmiş çalışma verilerini analiz etmeyi ve Lock Screen widget ile gün içinde kelimelerle karşılaşmaya devam etmeyi sağlıyor.
+Uygulamanın temel amacı yalnızca kelimeleri göstermek değil; **aktif hatırlama, aralıklı tekrar, hata analizi ve günlük tekrar alışkanlığı** üzerinden öğrendiğim kelimeleri konuşurken daha hızlı hatırlayabilmemi sağlamak.
 
-Bu proje, daha önce geliştirdiğim **Python tabanlı İtalyanca Kelime Quiz ve Öğrenme Analiz Sistemi'nin iOS tarafıdır.**
-
----
-
-## Projenin çıkış noktası
-
-İtalyanca öğrenirken temel hedefim kelimeleri yalnızca tanımak değil, **konuşurken ihtiyaç duyduğum anda hatırlayabilmek**.
-
-Bu nedenle hazır kelime listeleri yerine; videolarda, günlük konuşmalarda, seyahat sırasında veya kendi hayatımda kullanmak istediğim kelime ve ifadelerden oluşan kişisel bir veri seti kullanıyorum.
-
-Kelime listemi CSV üzerinde geliştirmeye devam ederken iOS uygulaması bu sistemi günlük kullanım için daha erişilebilir hale getiriyor.
+Bu proje, daha önce geliştirdiğim Python tabanlı İtalyanca Kelime Quiz ve Öğrenme Analiz Sistemi'nin iOS tarafıdır.
 
 ---
 
-## Ekran Görüntüleri
+## Projenin Çıkış Noktası
 
-### Ana Sayfa ve Kelime Çalışma
+
+Hazır kelime listeleri yerine; Instagram üzerinden kendi mesajlarımı export ediyorum. Bu şekilde kendi günlük hayatımda özellikle 2. yabancı dilim için ne tür kelime ve kelime grupları kullandığımı kullanış sırasına göre sıralıyorum ve öğrenmeye de bu liste üzerinden devam ediyorum
+
+---
+
+# Uygulama Yapısı
+
+Ana `Practice` ekranı artık farklı çalışma türlerini tek bir merkez altında topluyor.
+
+```text
+Practice
+│
+├── Vocabulary
+│   ├── Section 1
+│   ├── Section 2
+│   ├── Section 3
+│   └── ...
+│
+└── Conjugation
+    │
+    └── Present Tense
+        ├── Section 1
+        ├── Section 2
+        └── ...
+```
+
+Bu yapı sayesinde ileride:
+
+```text
+Conjugation
+├── Present Tense
+├── Future Tense
+├── Passato Prossimo
+└── Imperfetto
+```
+
+gibi yeni çalışma türleri mevcut sistemi bozmadan eklenebilir.
+
+---
+
+# Ekran Görüntüleri
+
+## Widget & Notifications & Vocab Search
 
 <p align="center">
 <img src="docs/images/1.PNG" width="250">
 <img src="docs/images/2.PNG" width="250">
-</p>
-
-### Quiz
-
-<p align="center">
 <img src="docs/images/3.PNG" width="250">
+<img src="docs/images/14.PNG" width="250">
 </p>
+---
 
-### İlerleme ve Geçmiş
+## Vocabulary Quiz
 
 <p align="center">
 <img src="docs/images/4.PNG" width="250">
 <img src="docs/images/5.PNG" width="250">
-</p>
-
-### Lock Screen Widget
-
-<p align="center">
 <img src="docs/images/6.PNG" width="250">
 <img src="docs/images/7.PNG" width="250">
 </p>
+---
+
+## Conjugation
+
+<p align="center">
+<img src="docs/images/8.PNG" width="250">
+<img src="docs/images/9.PNG" width="250">
+</p>
+
+## History & Progress
+
+<p align="center">
+<img src="docs/images/10.PNG" width="250">
+<img src="docs/images/11.PNG" width="250">
+<img src="docs/images/12.PNG" width="250">
+<img src="docs/images/13.PNG" width="250">
+</p>
 
 ---
 
-## Özellikler
+## Vocabulary Sections
 
-###  Bölüm bazlı kelime çalışma
+Kelime listesi tek seferde gösterilmek yerine **15 kelimelik bölümlere** ayrılıyor.
 
-Kelime listesi tek seferde gösterilmek yerine daha küçük çalışma bölümlerine ayrılıyor.
+Her section kendi öğrenme durumunu takip ediyor.
 
 Uygulama:
 
-- yeni kelimeleri bölümler halinde sunar,
-- her bölümün ilerlemesini takip eder,
-- öğrenilmiş ve tekrar edilmesi gereken kelimeleri ayırır,
-- tamamlanan quiz sonrasında ilgili bölüme hızlı dönüş sağlar.
-
-###  Aktif hatırlama quiz sistemi
-
-Quiz sisteminde çoktan seçmeli cevaplar yerine İtalyanca kelimenin doğrudan yazılması gerekiyor.
-
-Bu sayede kelimeyi görmek ve tanımak yerine, konuşma sırasında gerektiği gibi **hafızadan geri çağırma** pratiği yapılmış oluyor.
-
-Yanlış cevaplar daha sonra tekrar çalışılabilmesi için kaydediliyor ve farklı hata türlerine göre sınıflandırılıyor.
-
-###  İlerleme ve öğrenme analizi
-
-Progress ekranında:
-
-- öğrenme ilerlemesi,
-- doğruluk oranları,
-- zorlanılan kelimeler,
-- hata türleri,
-- bölüm ilerlemeleri
-
-takip edilebiliyor.
-
-Amaç yalnızca kaç kelime çalışıldığını göstermek değil, **sonraki çalışmada hangi kelimelere odaklanılması gerektiğini** anlamak.
-
-###  Çalışma geçmişi
-
-Quiz geçmişi Supabase üzerinde saklanıyor ve uygulama içerisinde incelenebiliyor.
-
-**Swift Charts** kullanılarak son 30 günlük çalışma aktivitesi görselleştiriliyor.
-
-Grafikte günlük olarak:
-
-- görülen kelime sayısı,
-- doğru cevaplanan kelime sayısı
-
-takip edilebiliyor.
-
-Uzun vadede büyüyecek geçmiş verileri için pagination ve tarih filtreleme kullanılıyor.
+- yeni kelimeleri section bazında sunar,
+- tamamlanan bölümleri takip eder,
+- tekrar zamanı gelen kelimeleri belirler,
+- section içerisindeki due kelimeleri ayrı gösterir,
+- review tamamlandıktan sonra section durumunu otomatik yeniler.
 
 ---
 
-##  Lock Screen Widget
+## Active Recall Quiz
+
+Vocabulary quizlerinde çoktan seçmeli cevaplar kullanılmıyor.
+
+Kullanıcıya Türkçe veya İngilizce anlam gösteriliyor ve İtalyanca karşılığını klavyeyle doğrudan yazması gerekiyor.
+
+Her kelime quiz içerisinde iki farklı yönden soruluyor:
+
+```text
+Turkish → Italian
+English → Italian
+```
+
+15 kelimelik bir section:
+
+```text
+15 words × 2 prompts = 30 questions
+```
+
+oluşturuyor.
+
+Sorular shuffle edilerek gösteriliyor.
+
+Yanlış cevaplanan sorular quiz havuzunda kalıyor ve kullanıcı doğru cevabı verene kadar daha sonra tekrar soruluyor.
+
+---
+
+## Spaced Repetition
+
+Vocabulary tarafında her kelimenin ayrı öğrenme durumu bulunuyor.
+
+Bir kelime review sırasında temiz şekilde geçilirse mastery seviyesi artıyor ve sonraki review tarihi ileri taşınıyor.
+
+Örneğin:
+
+```text
+Level 1 → 1 gün
+Level 2 → 2 gün
+Level 3 → 3 gün
+Level 4 → 4 gün
+...
+```
+
+Review sırasında bir kelimede hata yapılırsa kelime tekrar öğrenme havuzuna alınarak kısa sürede yeniden çalışılabiliyor.
+
+Her kelime bağımsız işlendiği için aynı section içerisindeki kelimeler zamanla farklı mastery seviyelerine ulaşabiliyor.
+
+---
+
+## 🔄 Free Practice
+
+Bir section için due kelime bulunmasa bile kullanıcı isterse section'ı tekrar çalışabiliyor.
+
+Free Practice sırasında:
+
+- doğru cevaplar mastery seviyesini artırmaz,
+- doğru cevaplar mevcut review tarihini değiştirmez,
+- yanlış yapılan kelimeler için mastery level sıfırlanır ve tekrar due hale gelir,
+- çalışma session ve attempt geçmişine kaydedilir.
+
+Böylece spaced repetition algoritmasını gereksiz şekilde hızlandırmadan serbest tekrar yapılabilir.
+
+---
+
+# Present Tense Conjugation
+
+Vocabulary sisteminin yanında ayrı bir **Conjugation** çalışma alanı bulunuyor.
+
+---
+
+## Fiillerin Otomatik Belirlenmesi
+
+Kelime veri setindeki İngilizce anlamı:
+
+```text
+To ...
+```
+
+şeklinde başlayan kelimeler otomatik olarak fiil adayı kabul ediliyor.
+
+Örneğin:
+
+```text
+To start / to begin   ✅
+To be                 ✅
+To have               ✅
+To think              ✅
+
+Today                 ❌
+Tomorrow              ❌
+Together               ❌
+Too much               ❌
+```
+
+Böylece ayrıca bir fiil listesi tutmak gerekmiyor.
+
+---
+
+## Manuel Conjugation Setup
+
+İtalyanca fiil çekimleri uygulama tarafından otomatik üretilmiyor.
+
+Her fiilin doğru çekimlerini uygulama içerisinden manuel olarak giriyorum.
+
+Bu yaklaşım sayesinde:
+
+- irregular verbs,
+- reflexive verbs,
+- özel çekimler
+
+yanlış algoritmik tahminlere bağlı kalmadan doğrudan doğru veri üzerinden çalışılabiliyor.
+
+Altı formun tamamı girildiğinde fiil otomatik olarak:
+
+```text
+Ready
+```
+
+durumuna geçiyor.
+
+Eksik kalan fiiller:
+
+```text
+Needs setup
+```
+
+olarak gösteriliyor.
+
+---
+
+## 🗄️ Conjugation Veri Modeli
+
+Conjugation verileri Supabase üzerinde ayrı bir tabloda tutuluyor.
+
+```text
+verb_conjugations
+
+id
+user_id
+word_id
+tense
+
+io
+tu
+lui_lei
+noi
+voi
+loro
+
+is_ready
+created_at
+updated_at
+```
+
+Aynı yapı ileride farklı tense türlerinin eklenmesine izin veriyor:
+
+```text
+word_id: 42
+tense: present_indicative
+
+word_id: 42
+tense: future_simple
+
+word_id: 42
+tense: passato_prossimo
+
+word_id: 42
+tense: imperfect
+```
+
+---
+
+# Italian Pronunciation
+
+Kelime detay ekranında iOS'in `AVSpeechSynthesizer` altyapısı kullanılarak İtalyanca telaffuz dinlenebiliyor.
+
+```text
+A proposito                         🔊
+
+Bu arada
+By the way / Speaking of
+```
+
+Uygulama cihaz üzerinde bulunan en kaliteli uygun İtalyanca sesi seçmeye çalışıyor.
+
+Bu sistem:
+
+- internet bağlantısı gerektirmez,
+- harici TTS API gerektirmez,
+- hızlı cevap verir,
+- `it-IT` seslendirme kullanır.
+
+Aynı telaffuz butonu vocabulary quizinde de cevap verildikten sonra görünür.
+Böylece cevap kontrolünden hemen sonra kelimenin doğru seslendirmesi dinlenebilir.
+
+---
+
+# Vocabulary Search
+
+Ana ekrandaki arama özelliği ile tüm hazır kelimeler:
+
+- İtalyanca,
+- Türkçe,
+- İngilizce
+
+alanlarında aranabiliyor.
+
+Bir kelimeye dokunulduğunda doğrudan aynı `Word Detail` ekranı açılıyor.
+
+---
+
+# Word Detail
+
+Kelime detay ekranında:
+
+- İtalyanca kelime,
+- Türkçe anlam,
+- İngilizce anlam,
+- İtalyanca açıklama,
+- örnek İtalyanca cümle,
+- telaffuz butonu
+
+bulunuyor.
+
+Aynı ekran hem uygulama içindeki search sonuçlarından hem de Lock Screen widget deep link'lerinden kullanılabiliyor.
+
+---
+
+# Review Notifications
+
+Vocabulary spaced repetition sistemi local notification desteğine sahip.
+
+Her section için yaklaşan en erken review tarihi hesaplanıyor ve local notification planlanıyor.
+
+Örneğin:
+
+```text
+Section 10 review is ready
+
+3 words are ready for review.
+```
+
+Notification'a dokunulduğunda uygulama doğrudan ilgili section ekranına yönlendiriliyor.
+
+---
+
+# History
+
+Quiz geçmişi Supabase üzerinde saklanıyor.
+
+Her quiz session ve her answer attempt ayrı olarak kaydediliyor.
+
+Vocabulary çalışma türleri:
+
+```text
+initial_section
+section_review
+free_practice
+```
+
+olarak birbirinden ayrılabiliyor.
+
+Swift Charts kullanılarak son 30 günlük çalışma aktivitesi görselleştiriliyor.
+
+Grafikte günlük olarak:
+
+- attempts,
+- correct answers
+
+takip ediliyor.
+
+Aktif günlerin ortalama attempt değeri ayrıca referans çizgisi olarak gösteriliyor.
+
+Uzun vadede büyüyen history verisi için pagination kullanılıyor.
+
+---
+
+# Error Tracking
+
+Yanlış cevaplar yalnızca `wrong` olarak tutulmuyor.
+
+Quiz sistemi hataları farklı kategorilere ayırabiliyor.
+
+Örneğin:
+
+```text
+spelling_error
+confused_with_another_word
+wrong_word_form
+no_recall
+unknown_or_semantic_error
+```
+
+Bu veriler daha sonra `Hardest Words` ve hata analizi ekranlarında kullanılabiliyor.
+
+---
+
+# Lock Screen Widget
 
 WidgetKit kullanılarak geliştirilen Lock Screen widget, gün boyunca İtalyanca kelimelerle karşılaşmaya devam etmeyi sağlıyor.
 
@@ -112,48 +414,16 @@ Widget:
 
 kilit ekranında gösteriyor.
 
-Kelime her uygulama açılışında değişmek yerine yaklaşık **3 saatlik bir rotasyon** kullanıyor.
+Kelime her uygulama açılışında değişmek yerine yaklaşık **3 saatlik bir timeline rotation** kullanıyor.
 
-Ana uygulama yaklaşan kelimeleri hazırlıyor ve **App Group** üzerinden widget ile paylaşıyor. Böylece uygulama açık olmasa bile WidgetKit kendi timeline'ı üzerinden kelimeleri değiştirebiliyor.
+Ana uygulama uygun kelimeleri hazırlıyor ve **App Group** üzerinden widget ile paylaşıyor.
 
-```text
-Supabase
-↓
-iOS Uygulaması
-↓
-App Group Cache
-↓
-WidgetKit Timeline
-↓
-Lock Screen
-```
+Widget öncelikle due kelimeleri, ardından öğrenilmiş kelimeleri ve gerektiğinde hazır vocabulary listesini kullanabiliyor.
 
-### Widget → Kelime Detayı
-
-Widget üzerindeki kelimeye dokunulduğunda deep link kullanılarak uygulama doğrudan ilgili kelimenin detay ekranında açılıyor.
-
-Burada:
-
-- İtalyanca kelime,
-- Türkçe anlam,
-- İngilizce anlam,
-- İtalyanca açıklama,
-- örnek İtalyanca cümle
-
-görülebiliyor.
 
 ---
 
-## Python projesiyle bağlantısı
-
-Bu uygulama, daha önce geliştirdiğim Python tabanlı İtalyanca çalışma sisteminin devamı niteliğinde.
-
-Python tarafında:
-
-- kişisel kelime veri setini CSV üzerinde tutuyorum,
-- terminal tabanlı quizler çalıştırabiliyorum,
-- çalışma sonuçlarını ve hata türlerini analiz edebiliyorum,
-- yeni kelimeleri Supabase'e senkronize edebiliyorum.
+# Python Projesiyle Bağlantısı
 
 Yeni kelimeleri CSV'ye ekledikten sonra:
 
@@ -161,29 +431,57 @@ Yeni kelimeleri CSV'ye ekledikten sonra:
 python sync_words.py
 ```
 
-komutuyla yalnızca yeni eklenen kelimeler Supabase'e aktarılıyor.
+komutuyla yalnızca yeni kelimeler Supabase'e aktarılıyor.
 
-iOS uygulaması ise aynı verileri mobil tarafta kullanarak günlük çalışma deneyimini oluşturuyor.
+CSV halen vocabulary için **source of truth** olarak kullanılmaya devam ediyor.
 
 ```text
 Italyanca_Kelimeler.csv
-↓
-sync_words.py
-↓
-Supabase
-↓
-    Mobil Uygulamam
-┌────────┴─────────┐
-│                  │
-Practice          Widget
-Quiz             Word Detail
-Progress
-History
+        ↓
+/python sync_words.py
+        ↓
+      Supabase
+        ↓
+    Mobil Uygulama
 ```
 
-Böylece CSV tabanlı çalışma düzenimi değiştirmeden Python ve iOS projelerini aynı öğrenme sistemi içerisinde kullanabiliyorum.
+Böylece mevcut CSV tabanlı çalışma düzenimi değiştirmeden Python ve iOS projelerini aynı öğrenme sistemi içerisinde kullanabiliyorum.
 
 ---
 
+# Teknik Yapı
 
-*Melih Şişkular*
+Uygulama ağırlıklı olarak native Apple teknolojileri kullanılarak geliştiriliyor.
+
+```text
+Swift
+SwiftUI
+Swift Concurrency
+Supabase Swift
+Supabase Auth
+PostgreSQL
+RLS
+Swift Charts
+WidgetKit
+App Groups
+UserNotifications
+AVFoundation
+AVSpeechSynthesizer
+```
+
+
+---
+
+## Related Project
+
+Python tabanlı kelime quiz ve analiz sistemi:
+
+**Italian Vocabulary Quiz & Learning Analyzer**
+
+https://github.com/MelihSiskular/italyanca-kelime-tekrar-ve-analiz
+
+---
+
+## Author
+
+**Melih Şişkular**
